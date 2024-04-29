@@ -1,5 +1,4 @@
 import os
-
 workDir = None
 
 def promptConfirm():
@@ -12,8 +11,7 @@ def promptConfirm():
 def main():
     promptConfirm()
     workDir = os.getcwd()
-    workDirContents = os.listdir(workDir)
-    for file in workDirContents:
+    for file in os.listdir(workDir):
         if not os.path.isdir(file):
             print("[SCAN]   | " + file + " -> Not a directory. Skipping.")
             continue
@@ -25,8 +23,8 @@ def moveContents(dir):
     dir = os.chdir(dir)
     dirChildren = os.listdir(dir)
     for file in dirChildren:
-        destFilePath = os.path.join(workDir, file)
         curFilePath = os.path.abspath(file)
+        destFilePath = os.path.join(workDir, file)
         try:
             os.renames(curFilePath, destFilePath)
             print("[MOVED] | " + file + " -> " + workDir)
