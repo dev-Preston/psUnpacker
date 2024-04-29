@@ -1,8 +1,17 @@
 import os
 
-workDir = os.getcwd()
+workDir = None
+
+def promptConfirm():
+    confirm = input("Are you sure you want to run psUnpacker in this directory? y/n\n")
+    if (confirm != "n") and (confirm != "y"):
+        promptConfirm()
+    elif confirm == "n":
+        exit()
 
 def main():
+    promptConfirm()
+    workDir = os.getcwd()
     workDirContents = os.listdir(workDir)
     for file in workDirContents:
         if not os.path.isdir(file):
