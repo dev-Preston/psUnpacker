@@ -1,13 +1,6 @@
 import os
 workDir = None
 
-def promptConfirm():
-    confirm = input("Are you sure you want to run psUnpacker in this directory? y/n\n")
-    if (confirm != "n") and (confirm != "y"):
-        promptConfirm()
-    elif confirm == "n":
-        exit()
-
 def main():
     promptConfirm()
     workDir = os.getcwd()
@@ -18,6 +11,13 @@ def main():
         print("[SCAN]   | " + file + " -> Valid directory. Moving contents.")
         moveContents(file)
     input("[FINISH] | Press any key to exit...")
+
+def promptConfirm():
+    confirm = input("Are you sure you want to run psUnpacker in this directory? y/n\n")
+    if (confirm != "n") and (confirm != "y"):
+        promptConfirm()
+    elif confirm == "n":
+        exit()
 
 def moveContents(dir):
     dir = os.chdir(dir)
