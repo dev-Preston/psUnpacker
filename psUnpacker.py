@@ -1,9 +1,8 @@
 import os
-workDir = None
+workDir = os.getcwd()
 
 def main():
     promptConfirm()
-    workDir = os.getcwd()
     for file in os.listdir(workDir):
         if not os.path.isdir(file):
             print("[SCAN]   | " + file + " -> Not a directory. Skipping.")
@@ -20,19 +19,25 @@ def promptConfirm():
         exit()
 
 def moveContents(dir):
-    dir = os.chdir(dir)
+    os.chdir(dir)
+    dir = os.getcwd()
+
     dirChildren = os.listdir(dir)
+
     for file in dirChildren:
         curFilePath = os.path.abspath(file)
         destFilePath = os.path.join(workDir, file)
         try:
             os.renames(curFilePath, destFilePath)
-            print("[MOVED] | " + file + " -> " + workDir)
+            print("[MOVED]  | " + file + " -> " + workDir)
         except FileNotFoundError:
             print("[ERROR]  | " + curFilePath + " -> File does not exist. Skipping")
         except FileExistsError:
             print("[ERROR]  | " + curFilePath + " -> File already exists in destination. Skipping.")
-    print("[FINISH] | " + os.getcwd())
+
     os.chdir("..")
+    os.rmdir(dir)
+    print("[FINISH] | " + dir)
+        
 
 main()
